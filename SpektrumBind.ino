@@ -12,13 +12,15 @@
 
 //Pin Assignments
 static const uint8_t receiverVcc = 0;
-static const uint8_t switchSignal = 15;
+static const uint8_t switchSignal = 9;
 static const uint8_t receiverSignal = 10;
 static const uint8_t numBindPulses = 9;  //Use Universal
 
 
 void setup() {
   // put your setup code here, to run once:
+
+  pinMode(LED_BUILTIN, OUTPUT);
 
   pinMode(switchSignal, INPUT);   //Switch imput to read when reciever is powered on. Use External 10K Pulldown Resistor
   
@@ -30,26 +32,36 @@ void setup() {
   digitalWrite(receiverVcc, HIGH);    //Power On
   digitalWrite(receiverSignal, HIGH);   //Allows for falling pulses
 
-  delay(5000);
+  delay(500);
 
 }
 
 void loop() {
+  digitalWrite(receiverSignal, LOW);
+  digitalWrite(LED_BUILTIN, HIGH);
   // Use a physical switch to power on reciever and begin pulses immediately
+  while(!digitalRead(switchSignal)){
+    delay(10);
+  }
+  Serial.println("High");
+  digitalWrite(receiverSignal, HIGH);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(100);   //Ensure reciever powered on before delivering pulses
+  
+  for(uint8_t pulseCount = 0; pulseCount < numBindPulses; pulseCount++){      //Deliver Falling Pulses
+  digitalWrite(receiverSignal, LOW);
+  delayMicroseconds(120);
+  digitalWrite(receiverSignal, HIGH);
+  delayMicroseconds(120);
+  }
 
-  if (digitalRead(switchSignal)){
-    Serial.println("High");
-    delay(100);   //Ensure reciever powered on before delivering pulses
-    
-    for(uint8_t pulseCount = 0; pulseCount < numBindPulses; pulseCount++){      //Deliver Falling Pulses
-    digitalWrite(receiverSignal, LOW);
-    delayMicroseconds(120);
-    digitalWrite(receiverSignal, HIGH);
-    delayMicroseconds(120);
-    }
-
-    Serial.println("Pulses Sent");
-    delay(15000); //Power on transmitter in bind mode within this delay period
+  Serial.println("Pulses Sent");
+  while(digitalRead(switchSignal)){
+    //Power on transmitter in bind mode within this delay period
+      digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+      delay(500);
+      digitalWrite(LED_BUILTIN, LOW);
+      delay(500);
   }
 
 }
