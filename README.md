@@ -35,3 +35,5 @@ NOTE: SPEKTRUM SATELLITE RECEIVERS ARE 3.3V DEVICES! Application of more than 3.
 The following schematic details the circuit used for this binding process. The GPIO pins in the diagram do not match the pin assignments in the code!
 
 ![BindCircuit](https://user-images.githubusercontent.com/104041016/182746055-f7c7d6db-a366-4edc-8f20-23109ccb1560.png)
+
+![PhotoCircuit](images/PhotoCircuit.jpg)
