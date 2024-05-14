@@ -36,4 +36,6 @@ The following schematic details the circuit used for this binding process. The G
 
 ![BindCircuit](https://user-images.githubusercontent.com/104041016/182746055-f7c7d6db-a366-4edc-8f20-23109ccb1560.png)
 
+Alternative circuit setup, with no BEC, using onboard 3.3V line from the Raspberry Pi Pico and a simple switch. Pinout can be seen in the photo, only hidden component is a 1.2K pulldown resistor on pin 9 the other side of the PCB.
+
 ![PhotoCircuit](images/PhotoCircuit.jpg)
